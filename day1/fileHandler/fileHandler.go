@@ -16,28 +16,22 @@ func ReadData(fileName string) ([]int64, []int64, error) {
 
 	defer file.Close()
 
+	firstColumn := make([]int64, 0, 1000)
+	secondColumn := make([]int64, 0, 1000)
+
 	scanner := bufio.NewScanner(file)
-	lineCount := 0
-	for scanner.Scan() {
-		lineCount++
-	}
-
-	firstColumn := make([]int64, lineCount)
-	secondColumn := make([]int64, lineCount)
-
-	_, err = file.Seek(0, 0)
-	if err != nil {
-		return nil, nil, errors.New("failed to seek file start")
-	}
-	scanner = bufio.NewScanner(file)
 	index := 0
 	for scanner.Scan() {
 		line := scanner.Text()
 
 		numbers := strings.Fields(line)
 
-		a, err1 := strconv.ParseInt(numbers[0], 10, 64)
-		b, err2 := strconv.ParseInt(numbers[1], 10, 64)
+		if len(numbers) < 2 {
+			return nil, nil, errors.New("invalid line format")
+		}
+
+		num1, err1 := strconv.ParseInt(numbers[0], 10, 64)
+		num2, err2 := strconv.ParseInt(numbers[1], 10, 64)
 
 		if err1 != nil {
 			return nil, nil, err1
@@ -47,8 +41,8 @@ func ReadData(fileName string) ([]int64, []int64, error) {
 			return nil, nil, err2
 		}
 
-		firstColumn[index] = a
-		secondColumn[index] = b
+		firstColumn = append(firstColumn, num1)
+		secondColumn = append(secondColumn, num2)
 		index++
 	}
 
