@@ -20,7 +20,6 @@ func ReadData(fileName string) ([]int64, []int64, error) {
 	secondColumn := make([]int64, 0, 1000)
 
 	scanner := bufio.NewScanner(file)
-	index := 0
 	for scanner.Scan() {
 		line := scanner.Text()
 
@@ -43,7 +42,6 @@ func ReadData(fileName string) ([]int64, []int64, error) {
 
 		firstColumn = append(firstColumn, num1)
 		secondColumn = append(secondColumn, num2)
-		index++
 	}
 
 	return firstColumn, secondColumn, nil
