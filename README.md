@@ -1,6 +1,6 @@
 # Advent of Code '24
 
-This is my attempt to solve at least some task from the challenge.
+This is my attempt to solve at least some tasks from the challenge.
 
 I've chosen _Go_ programming language to challenge myself even further as I have only basic knowledge of it.
 
