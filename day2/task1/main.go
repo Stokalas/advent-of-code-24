@@ -19,8 +19,21 @@ func main() {
 
 	result := 0
 
+	arg, err := strconv.Atoi(os.Args[1])
+	if err != nil {
+		fmt.Println("Failed to parse system arg for Damper usage! Defaulting to simple mode")
+		arg = 0
+	}
+
+	var safeCheckFunc func(*[]int) bool
+	if arg == 1 {
+		safeCheckFunc = isSafeLineWithDampener
+	} else {
+		safeCheckFunc = isSafeLine
+	}
+
 	for _, line := range *data {
-		if isSafeLine(&line) {
+		if safeCheckFunc(&line) {
 			result++
 		}
 	}
@@ -36,20 +49,45 @@ func isSafeLine(numbers *[]int) bool {
 	increasing := (*numbers)[1]-(*numbers)[0] > 0
 	for i := 0; i < len(*numbers)-1; i++ {
 		difference := (*numbers)[i+1] - (*numbers)[i]
+		inRange := checkIfInRange(difference)
+		keepsTrend := checkIfKeepsTrend(difference, increasing)
 
-		if difference == 0 {
+		if !inRange || !keepsTrend {
 			return false
 		}
+	}
 
-		if increasing && difference < 0 {
-			return false
-		} else if !increasing && difference > 0 {
-			return false
-		}
+	return true
+}
 
-		if math.Abs(float64(difference)) > 3 {
-			return false
+func isSafeLineWithDampener(numbers *[]int) bool {
+	if isSafeLine(numbers) {
+		return true
+	}
+
+	for excluded := 0; excluded < len(*numbers); excluded++ {
+		reducedList := make([]int, 0, len(*numbers)-1)
+		for index, element := range *numbers {
+			if index != excluded {
+				reducedList = append(reducedList, element)
+			}
 		}
+		if isSafeLine(&reducedList) {
+			return true
+		}
+	}
+	return false
+}
+
+func checkIfInRange(difference int) bool {
+	return !(math.Abs(float64(difference)) > 3)
+}
+
+func checkIfKeepsTrend(difference int, increasing bool) bool {
+	if !increasing && difference >= 0 {
+		return false
+	} else if increasing && difference <= 0 {
+		return false
 	}
 
 	return true
@@ -77,7 +115,7 @@ func readData(fileName string) (*[][]int, error) {
 			number, err := strconv.Atoi(element)
 
 			if err != nil {
-				return nil, errors.New("Failed to parse integer")
+				return nil, errors.New("failed to parse integer")
 			}
 
 			lineLevels = append(lineLevels, number)
