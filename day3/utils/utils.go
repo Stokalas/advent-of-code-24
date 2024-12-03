@@ -38,6 +38,18 @@ func ProcessMul(input string, targetIndex int) (int, error) {
 	return getDigit(input[targetIndex : targetIndex+targetRange])
 }
 
+func FindClosestPrevIndex(targetIndex int, indexList *[]int) int {
+	resultIndex := -1
+
+	for _, element := range *indexList {
+		if element < targetIndex && targetIndex > resultIndex {
+			resultIndex = element
+		}
+	}
+
+	return resultIndex
+}
+
 func getDigit(input string) (int, error) {
 	separatorIndex := strings.Index(input, ",")
 
@@ -76,6 +88,8 @@ func ReadData(fileName string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+
+	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
 	result := ""

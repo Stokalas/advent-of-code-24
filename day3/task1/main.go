@@ -10,6 +10,7 @@ func main() {
 
 	if err != nil {
 		fmt.Println("Error while reading file:", err)
+		return
 	}
 
 	result := 0
