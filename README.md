@@ -20,3 +20,6 @@ The first task was swift and fun. Though I struggled a lot with the second one. 
 
 __Key Learnings:__
 - Usage of console args in Go.
+
+### Day 3
+It went much better today! All the time I felt in control and enjoyed implementing the solutions (no failed attempts!) Hopefully the trend stays like this tomorrow as well :). It was fun to play around with strings and their splicing. No major discoveries, though.
