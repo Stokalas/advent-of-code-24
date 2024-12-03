@@ -1,38 +1,14 @@
-package main
+package utils
 
 import (
 	"bufio"
 	"errors"
-	"fmt"
 	"os"
 	"strconv"
 	"strings"
 )
 
-func main() {
-	data, err := readData("data.txt")
-
-	if err != nil {
-		fmt.Println("Error while reading file:", err)
-	}
-
-	result := 0
-	mulIndexes := findAllIndexesOfString(data, "mul(")
-
-	for _, index := range mulIndexes {
-		value, err := processMul(data, index)
-
-		if err != nil {
-			continue
-		}
-
-		result += value
-	}
-
-	fmt.Println(result)
-}
-
-func findAllIndexesOfString(input, subStr string) []int {
+func FindAllIndexesOfString(input, subStr string) []int {
 	result := make([]int, 0, 100)
 	subStrLen := len(subStr)
 
@@ -48,7 +24,7 @@ func findAllIndexesOfString(input, subStr string) []int {
 	return result
 }
 
-func processMul(input string, targetIndex int) (int, error) {
+func ProcessMul(input string, targetIndex int) (int, error) {
 	targetRange := 12
 
 	if len(input) < targetIndex+targetRange {
@@ -94,7 +70,7 @@ func getDigit(input string) (int, error) {
 	return firstNumber * secondNumber, nil
 }
 
-func readData(fileName string) (string, error) {
+func ReadData(fileName string) (string, error) {
 	file, err := os.Open(fileName)
 
 	if err != nil {
