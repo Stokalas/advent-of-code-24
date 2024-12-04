@@ -23,3 +23,10 @@ __Key Learnings:__
 
 ### Day 3
 It went much better today! All the time I felt in control and enjoyed implementing the solutions (no failed attempts!) Hopefully the trend stays like this tomorrow as well :). It was fun to play around with strings and their splicing. No major discoveries, though.
+
+### Day 4
+Not bad at all. Maybe a bit messy code, but had little time to solve today's tasks, so happy I did it at all... BTW Spotify Wrapped is out!
+
+___Key Learnings:__
+- str[i] for a string gives you the byte at index i, not the rune;
+- comparing string elements to runes.
