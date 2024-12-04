@@ -1,14 +1,13 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"os"
-	commonUtils "stokalas/advent-of-code/utils"
+	"stokalas/advent-of-code/commonUtils"
+	"stokalas/advent-of-code/day4/utils"
 )
 
 func main() {
-	data, err := readData("data.txt")
+	data, err := utils.ReadData("../data.txt")
 
 	if err != nil {
 		fmt.Println("Error while reading the file", err)
@@ -144,23 +143,4 @@ func checkHorizontal(row string, index int, searchRunes []rune) int {
 		}
 	}
 	return result
-}
-
-func readData(fileName string) (*[]string, error) {
-	file, err := os.Open(fileName)
-
-	if err != nil {
-		return nil, err
-	}
-
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
-	rows := make([]string, 0, 150)
-
-	for scanner.Scan() {
-		rows = append(rows, scanner.Text())
-	}
-
-	return &rows, nil
 }
