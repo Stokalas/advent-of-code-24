@@ -24,6 +24,7 @@ func main() {
 		return
 	}
 
+	secondTaskResult := bruteForceObstacles(data)
 	result := 0
 	for {
 		if !stillInside(data, x, y) {
@@ -41,6 +42,52 @@ func main() {
 	}
 
 	fmt.Println(result)
+	fmt.Println(secondTaskResult)
+}
+
+func bruteForceObstacles(data *[]string) int {
+	result := 0
+	x, y, _ := findStartingPos(data)
+
+	for i := 0; i < len(*data); i++ {
+		for j := 0; j < len((*data)[0]); j++ {
+			var dataCopy = make([]string, len(*data))
+			copy(dataCopy[:], (*data)[:])
+			currRow := dataCopy[i]
+
+			if currRow[j] == '#' || currRow[j] == '^' {
+				continue
+			}
+			dataCopy[i] = currRow[:j] + "#" + currRow[j+1:]
+			xCurr := x
+			yCurr := y
+			direction := 0
+			noNewPlaces := 0
+
+			for {
+				if !stillInside(&dataCopy, xCurr, yCurr) {
+					break
+				}
+				if noNewPlaces >= 20000 {
+					result++
+					break
+				}
+
+				unique, err := processStep(&dataCopy, &direction, &xCurr, &yCurr)
+				if err != nil {
+					fmt.Println("error while processing step", err)
+					return -1
+				}
+
+				if unique == 0 {
+					noNewPlaces++
+				} else {
+					noNewPlaces = 0
+				}
+			}
+		}
+	}
+	return result
 }
 
 func stillInside(data *[]string, x, y int) bool {
