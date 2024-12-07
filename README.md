@@ -34,3 +34,9 @@ __Key Learnings:__
 ### Day 5
 Life happens, so completing this on 7th of December. It was nice to use `Map`s and it felt quite good solving these after having a bit of rest from it.
 
+### Day 6
+Second day solved on 7th of December. I enjoyed "gamified" nature of the task. I'm not super happy with 2nd task implementation, but needed to get it done, so I can move on with other days. Brute force solution is not optimal, but at least is able to find the result.
+
+__Key Learnings:__
+- Working with arrays, them being reference type, and copying array data to another instance.
+
