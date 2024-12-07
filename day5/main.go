@@ -13,11 +13,13 @@ func main() {
 
 	if err != nil {
 		fmt.Println("Failed to read the file", err)
+		return
 	}
 
 	sequences, sepIndex, err := parseSequences(*data)
 	if err != nil {
 		fmt.Println("Failed to parse sequences:", err)
+		return
 	}
 
 	result := 0
