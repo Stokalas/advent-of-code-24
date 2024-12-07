@@ -21,6 +21,7 @@ func main() {
 	}
 
 	result := 0
+	result2nd := 0
 	for i := sepIndex + 1; i < len(*data); i++ {
 		rowNumbers, err := parseRow((*data)[i])
 
@@ -30,9 +31,13 @@ func main() {
 
 		if checkIfRowInOrder(rowNumbers, sequences) {
 			result += getMiddleElement(rowNumbers)
+		} else {
+			ordered := orderRow(rowNumbers, sequences)
+			result2nd += getMiddleElement(ordered)
 		}
 	}
-	fmt.Println(result)
+	fmt.Println("1st task:", result)
+	fmt.Println("2nd task:", result2nd)
 }
 
 func getMiddleElement(rowNumbers []int) int {
@@ -41,6 +46,34 @@ func getMiddleElement(rowNumbers []int) int {
 		middleIndex++
 	}
 	return rowNumbers[middleIndex-1]
+}
+
+func orderRow(rowNumbers []int, sequences *map[int][]int) []int {
+	scores := make(map[int]int)
+
+	for i := 0; i < len(rowNumbers); i++ {
+		score := 0
+		cannotBeAfter := (*sequences)[rowNumbers[i]]
+		for j := 0; j < len(rowNumbers); j++ {
+			if j == i {
+				continue
+			}
+			if arrayContains(rowNumbers[j], cannotBeAfter) {
+				score++
+			}
+		}
+		scores[rowNumbers[i]] = score
+	}
+
+	result := make([]int, len(rowNumbers))
+
+	for _, number := range rowNumbers {
+		score := scores[number]
+
+		result[score] = number
+	}
+
+	return result
 }
 
 func checkIfRowInOrder(rowNumbers []int, sequences *map[int][]int) bool {
