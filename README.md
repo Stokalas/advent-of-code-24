@@ -27,6 +27,10 @@ It went much better today! All the time I felt in control and enjoyed implementi
 ### Day 4
 Not bad at all. Maybe a bit messy code, but had little time to solve today's tasks, so happy I did it at all... BTW Spotify Wrapped is out!
 
-___Key Learnings:__
+__Key Learnings:__
 - str[i] for a string gives you the byte at index i, not the rune;
 - comparing string elements to runes.
+
+### Day 5
+Life happens, so completing this on 7th of December. It was nice to use `Map`s and it felt quite good solving these after having a bit of rest from it.
+
