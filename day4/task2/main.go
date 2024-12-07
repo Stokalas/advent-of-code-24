@@ -3,11 +3,10 @@ package main
 import (
 	"fmt"
 	"stokalas/advent-of-code/commonUtils"
-	"stokalas/advent-of-code/day4/utils"
 )
 
 func main() {
-	data, err := utils.ReadData("../data.txt")
+	data, err := commonUtils.ReadData("../data.txt")
 
 	if err != nil {
 		fmt.Println("Error while reading the file", err)
