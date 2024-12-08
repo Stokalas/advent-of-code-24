@@ -18,64 +18,94 @@ func main() {
 		return
 	}
 
-	antennasMap := make(map[rune][]Coordinates, 32)
+	xLength := len((*data)[0])
+	yLength := len(*data)
+
+	antennasMap := getAntennasMap(data)
+
+	antinodes := make([]Coordinates, 0, 200)
+	for _, v := range antennasMap {
+		processType(v, &antinodes, xLength, yLength, false)
+	}
+
+	fmt.Println("First task result:", len(antinodes))
+
+	antinodesWithHarmonics := make([]Coordinates, 0, 500)
+	for _, v := range antennasMap {
+		processType(v, &antinodesWithHarmonics, xLength, yLength, true)
+	}
+
+	fmt.Println("Second task result:", len(antinodesWithHarmonics))
+}
+
+func processType(locations []Coordinates, antinodes *[]Coordinates, xLength, yLength int, includeHarmonics bool) {
+	for i := 0; i < len(locations)-1; i++ {
+		for j := i + 1; j < len(locations); j++ {
+			xDiff := locations[j].X - locations[i].X
+			yDiff := locations[j].Y - locations[i].Y
+
+			var funcToUse func(Coordinates, *[]Coordinates, int, int, int, int) bool
+
+			if includeHarmonics {
+				funcToUse = processAntinodeWithHarmonics
+			} else {
+				funcToUse = processAntinode
+			}
+
+			funcToUse(locations[j], antinodes, xDiff, yDiff, xLength, yLength)
+
+			xDiff *= -1
+			yDiff *= -1
+
+			funcToUse(locations[i], antinodes, xDiff, yDiff, xLength, yLength)
+		}
+	}
+}
+
+func processAntinodeWithHarmonics(antenna Coordinates, antinodes *[]Coordinates, xDiff, yDiff, xLen, yLen int) bool {
+	appendAntinode(antenna, antinodes)
+
+	xDiffAdj := xDiff
+	yDiffAdj := yDiff
+	for processAntinode(antenna, antinodes, xDiffAdj, yDiffAdj, xLen, yLen) {
+		xDiffAdj += xDiff
+		yDiffAdj += yDiff
+	}
+	return true
+}
+
+func processAntinode(antenna Coordinates, antinodes *[]Coordinates, xDiff, yDiff, xLen, yLen int) bool {
+	newX := antenna.X + xDiff
+	newY := antenna.Y + yDiff
+
+	if newX >= 0 && newX < xLen && newY >= 0 && newY < yLen {
+		pos := Coordinates{X: newX, Y: newY}
+		appendAntinode(pos, antinodes)
+		return true
+	}
+
+	return false
+}
+
+func appendAntinode(pos Coordinates, antinodes *[]Coordinates) {
+	for _, node := range *antinodes {
+		if node.X == pos.X && node.Y == pos.Y {
+			return
+		}
+	}
+	*antinodes = append(*antinodes, pos)
+}
+
+func getAntennasMap(data *[]string) map[rune][]Coordinates {
+	result := make(map[rune][]Coordinates, 32)
 
 	for yIndex, row := range *data {
 		for xIndex, char := range row {
 			if char != '.' {
-				antennasMap[char] = append(antennasMap[char], Coordinates{X: xIndex, Y: yIndex})
+				result[char] = append(result[char], Coordinates{X: xIndex, Y: yIndex})
 			}
 		}
 	}
 
-	xLength := len((*data)[0])
-	yLength := len(*data)
-
-	antinodes := make([]Coordinates, 0, 200)
-	for _, v := range antennasMap {
-		processType(v, &antinodes, xLength, yLength)
-	}
-
-	fmt.Println(len(antinodes))
-}
-
-func processType(locations []Coordinates, antinodes *[]Coordinates, xLength, yLength int) {
-	for i := 0; i < len(locations)-1; i++ {
-		for j := i + 1; j < len(locations); j++ {
-			x1 := locations[j].X - locations[i].X
-			y1 := locations[j].Y - locations[i].Y
-
-			newX := locations[j].X + x1
-			newY := locations[j].Y + y1
-
-			if newX >= 0 && newX < xLength && newY >= 0 && newY < yLength {
-				pos := Coordinates{X: newX, Y: newY}
-				if !antinodeAlreadyExists(pos, *antinodes) {
-					*antinodes = append(*antinodes, pos)
-				}
-			}
-
-			x2 := x1 * -1
-			y2 := y1 * -1
-
-			newX = locations[i].X + x2
-			newY = locations[i].Y + y2
-
-			if newX >= 0 && newX < xLength && newY >= 0 && newY < yLength {
-				pos := Coordinates{X: newX, Y: newY}
-				if !antinodeAlreadyExists(pos, *antinodes) {
-					*antinodes = append(*antinodes, pos)
-				}
-			}
-		}
-	}
-}
-
-func antinodeAlreadyExists(pos Coordinates, antinodes []Coordinates) bool {
-	for _, node := range antinodes {
-		if node.X == pos.X && node.Y == pos.Y {
-			return true
-		}
-	}
-	return false
+	return result
 }

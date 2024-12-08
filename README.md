@@ -42,3 +42,6 @@ __Key Learnings:__
 
 ### Day 7
 One week of tasks done! Today was another fun one, I've got a chance to use custom struct (though it was not necessary). I feel like I've had a few interesting ideas - using binary and trinary addition logic to generate different combinations of operands as well as concatenating numbers without using strings. Small note: this day was solved on 8th of December (still catching up! 😓)
+
+### Day 8
+Finally I've caught up! It's starting to feel like with every solution I need to rework less and less to complete the second task. I'm happy that my way of thinking becomes more structured instead of mess just to solve specific issue. Another cool thing is that I need to google _Go_ specific things less and less to write code. Growing them muscles 💪.
