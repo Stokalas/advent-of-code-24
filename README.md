@@ -40,3 +40,5 @@ Second day solved on 7th of December. I enjoyed "gamified" nature of the task. I
 __Key Learnings:__
 - Working with arrays, them being reference type, and copying array data to another instance.
 
+### Day 7
+One week of tasks done! Today was another fun one, I've got a chance to use custom struct (though it was not necessary). I feel like I've had a few interesting ideas - using binary and trinary addition logic to generate different combinations of operands as well as concatenating numbers without using strings. Small note: this day was solved on 8th of December (still catching up! 😓)
