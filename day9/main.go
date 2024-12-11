@@ -29,9 +29,7 @@ func main() {
 	compactFileSystemWithoutFrag(altFileSystem)
 
 	fmt.Println("First result:", calculateCheckSum(*fileSystem))
-	// fmt.Println(fileSystem)
 	fmt.Println("Second result:", calculateCheckSum(*altFileSystem))
-	// fmt.Println(altFileSystem)
 }
 
 func calculateCheckSum(fileSystem []int) int {
