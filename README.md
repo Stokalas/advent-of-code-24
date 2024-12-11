@@ -51,3 +51,6 @@ Got a bit stuck on original Day 9 with the 2nd task of this. It seemed to be a s
 
 __Key learnings:__
 - Reading about [_File system fragmentation_](https://en.wikipedia.org/wiki/File_system_fragmentation)
+
+### Day 10
+My initial goal was to complete at least 10 days - that has been done already! Well, besides the fact that time flies, I seem to really enjoy these puzzles. That means that I will definetely continue on solving them :).

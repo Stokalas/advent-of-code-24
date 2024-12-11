@@ -17,3 +17,11 @@ func FindAllIndexesOfString(input, subStr string) []int {
 	}
 	return result
 }
+
+func ParseDigitFromRune(char rune) int {
+	if char >= '0' && char <= '9' {
+		return int(char - '0')
+	}
+
+	return -1
+}
