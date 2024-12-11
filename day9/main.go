@@ -24,7 +24,14 @@ func main() {
 
 	fileSystem := createFileSystem(sumOfDigits, digits)
 	compactFileSystem(fileSystem)
-	fmt.Println(calculateCheckSum(*fileSystem))
+
+	altFileSystem := createFileSystem(sumOfDigits, digits)
+	compactFileSystemWithoutFrag(altFileSystem)
+
+	fmt.Println("First result:", calculateCheckSum(*fileSystem))
+	// fmt.Println(fileSystem)
+	fmt.Println("Second result:", calculateCheckSum(*altFileSystem))
+	// fmt.Println(altFileSystem)
 }
 
 func calculateCheckSum(fileSystem []int) int {
@@ -39,6 +46,73 @@ func calculateCheckSum(fileSystem []int) int {
 	}
 
 	return result
+}
+
+func compactFileSystemWithoutFrag(fileSystem *[]int) {
+	endIndex := len(*fileSystem) - 1
+
+	for endIndex >= 0 {
+		start, end := findNextMoveCandidate(fileSystem, endIndex)
+
+		if start == -1 {
+			break
+		}
+
+		length := end - start + 1
+
+		spot := findSpotToMoveCandidate(fileSystem, length, start)
+
+		if spot != -1 {
+			for i := 0; i < length; i++ {
+				temp := (*fileSystem)[spot+i]
+				(*fileSystem)[spot+i] = (*fileSystem)[start+i]
+				(*fileSystem)[start+i] = temp
+			}
+		}
+		endIndex = start - 1
+	}
+}
+
+func findSpotToMoveCandidate(fileSystem *[]int, length, limit int) int {
+	index := 0
+	currentLength := 0
+	for index < len(*fileSystem) && index < limit {
+		if (*fileSystem)[index] != -1 {
+			index++
+			currentLength = 0
+			continue
+		}
+
+		index++
+		currentLength++
+
+		if currentLength == length {
+			return index - currentLength
+		}
+	}
+
+	return -1
+}
+
+func findNextMoveCandidate(fileSystem *[]int, index int) (int, int) {
+	for (*fileSystem)[index] == -1 {
+		index--
+		if index < 0 {
+			return -1, -1
+		}
+	}
+
+	value := (*fileSystem)[index]
+	endIndex := index
+
+	for (*fileSystem)[index-1] == value {
+		index--
+		if index == 0 {
+			return index, endIndex
+		}
+	}
+
+	return index, endIndex
 }
 
 func compactFileSystem(fileSystem *[]int) {
