@@ -164,7 +164,7 @@ func parseDigits(dataRow string) ([]int, int, error) {
 	digits := make([]int, 0, len(dataRow))
 	sumOfDigits := 0
 	for _, digit := range dataRow {
-		digitAsInt := parseDigit(digit)
+		digitAsInt := commonUtils.ParseDigitFromRune(digit)
 		if digitAsInt == -1 {
 			return nil, 0, errors.New("non digit encountered inside of the row")
 		}
@@ -173,12 +173,4 @@ func parseDigits(dataRow string) ([]int, int, error) {
 	}
 
 	return digits, sumOfDigits, nil
-}
-
-func parseDigit(char rune) int {
-	if char >= '0' && char <= '9' {
-		return int(char - '0')
-	}
-
-	return -1
 }
