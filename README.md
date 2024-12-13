@@ -60,3 +60,6 @@ First one where I gave up (kind of). The first part was ok as running transforma
 
 ### Day 12
 Whew, a hard one. I had to come up with some nasty solutions to get through this one. And it feels like there's some algorithms to solve such issues... Need to read more on existing ones to expand my toolbox. Nonetheless, it was solved, hoping future ones won't get much harder... (definitely not proud of today's code :/)
+
+__Key learnings:__
+- Found out about cool utilities package "slices".
