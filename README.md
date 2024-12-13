@@ -57,3 +57,6 @@ My initial goal was to complete at least 10 days - that has been done already! W
 
 ### Day 11
 First one where I gave up (kind of). The first part was ok as running transformation 25 times does not produce very big array of data. Though the second part required 75 transformations and that is... too long do to using straight-forward way. Well, the task emphasized that order of items are important - but they're not, to get answers. I had to look into discussion of 2nd task to find out that it can be solved with using just counts of elements instead of constructing full arrays. I guess the most important thing is to "catch" that possible numbers are limited to certain account and hence "counts" method works just fine :)
+
+### Day 12
+Whew, a hard one. I had to come up with some nasty solutions to get through this one. And it feels like there's some algorithms to solve such issues... Need to read more on existing ones to expand my toolbox. Nonetheless, it was solved, hoping future ones won't get much harder... (definitely not proud of today's code :/)
