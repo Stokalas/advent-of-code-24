@@ -4,12 +4,19 @@ import (
 	"errors"
 	"fmt"
 	"math"
+	"os"
 	"stokalas/advent-of-code/commonUtils"
 	"strconv"
 	"strings"
 )
 
 func main() {
+	numberOfBlinks, err := strconv.Atoi(os.Args[1])
+	if err != nil {
+		fmt.Println("Failed to determine number of blinks from console args:", err)
+		return
+	}
+
 	data, err := commonUtils.ReadData("data.txt")
 
 	if err != nil {
@@ -24,11 +31,54 @@ func main() {
 		return
 	}
 
-	for i := 0; i < 25; i++ {
-		pebbles = handleBlink(pebbles)
+	var result int64 = 0
+
+	if numberOfBlinks <= 40 {
+		for i := 0; i < numberOfBlinks; i++ {
+			pebbles = handleBlink(pebbles)
+		}
+		result = int64(len(*pebbles))
+	} else {
+		pebbleCounts := make(map[int]int)
+		for _, peb := range *pebbles {
+			pebbleCounts[peb]++
+		}
+
+		for i := 0; i < numberOfBlinks; i++ {
+			pebbleCounts = handleBlinkByCounts(&pebbleCounts)
+		}
+
+		for _, amounts := range pebbleCounts {
+			result += int64(amounts)
+		}
 	}
 
-	fmt.Println(len(*pebbles))
+	fmt.Println(result)
+}
+
+func handleBlinkByCounts(pebbleCounts *map[int]int) map[int]int {
+	result := make(map[int]int)
+
+	for val, amount := range *pebbleCounts {
+		if val == 0 {
+			result[1] += amount
+			continue
+		}
+
+		if val >= 10 {
+			digitCount := findDigitCount(val)
+			if digitCount%2 == 0 {
+				firstHalf, secondHalf := splitInHalf(val, digitCount)
+				result[firstHalf] += amount
+				result[secondHalf] += amount
+				continue
+			}
+		}
+
+		result[val*2024] += amount
+	}
+
+	return result
 }
 
 func handleBlink(pebbles *[]int) *[]int {

@@ -54,3 +54,6 @@ __Key learnings:__
 
 ### Day 10
 My initial goal was to complete at least 10 days - that has been done already! Well, besides the fact that time flies, I seem to really enjoy these puzzles. That means that I will definetely continue on solving them :).
+
+### Day 11
+First one where I gave up (kind of). The first part was ok as running transformation 25 times does not produce very big array of data. Though the second part required 75 transformations and that is... too long do to using straight-forward way. Well, the task emphasized that order of items are important - but they're not, to get answers. I had to look into discussion of 2nd task to find out that it can be solved with using just counts of elements instead of constructing full arrays. I guess the most important thing is to "catch" that possible numbers are limited to certain account and hence "counts" method works just fine :)
