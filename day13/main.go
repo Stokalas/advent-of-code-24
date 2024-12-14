@@ -9,8 +9,8 @@ import (
 )
 
 type Coordinates struct {
-	X int
-	Y int
+	X int64
+	Y int64
 }
 
 type Game struct {
@@ -33,26 +33,38 @@ func main() {
 		return
 	}
 
-	result := 0
-	for index, game := range *games {
+	var result int64 = 0
+	for _, game := range *games {
 		aPresses, bPresses, err := handleEquation(game)
 		if err != nil {
-			fmt.Println(index, err)
 			continue
 		}
 		tokens := calculateTokens(aPresses, bPresses)
-		fmt.Println(index, tokens)
 		result += tokens
 	}
 
+	var result2nd int64 = 0
+	var additional int64 = 10000000000000
+
+	for _, game := range *games {
+		adaptedGame := Game{A: game.A, B: game.B, Result: Coordinates{X: game.Result.X + additional, Y: game.Result.Y + additional}}
+		aPresses, bPresses, err := handleEquation(adaptedGame)
+		if err != nil {
+			continue
+		}
+		tokens := calculateTokens(aPresses, bPresses)
+		result2nd += tokens
+	}
+
 	fmt.Println(result)
+	fmt.Println(result2nd)
 }
 
-func calculateTokens(a, b int) int {
+func calculateTokens(a, b int64) int64 {
 	return a*3 + b*1
 }
 
-func handleEquation(game Game) (int, int, error) {
+func handleEquation(game Game) (int64, int64, error) {
 	// nA.X + mB.X = Rez.X
 	// nA.y + mB.Y = Rez.Y
 	D := game.A.X*game.B.Y - game.B.X*game.A.Y
@@ -98,8 +110,8 @@ func parseData(data *[]string) (*[]Game, error) {
 func parseButton(data string) (Coordinates, error) {
 	fields := strings.Fields(data)
 
-	xCoord, err1 := strconv.Atoi(fields[2][2 : len(fields[2])-1])
-	yCoord, err2 := strconv.Atoi(fields[3][2:])
+	xCoord, err1 := strconv.ParseInt(fields[2][2:len(fields[2])-1], 10, 64)
+	yCoord, err2 := strconv.ParseInt(fields[3][2:], 10, 64)
 
 	if err1 != nil || err2 != nil {
 		return Coordinates{}, errors.New("failed to parse button integer")
@@ -111,8 +123,8 @@ func parseButton(data string) (Coordinates, error) {
 func parsePrize(data string) (Coordinates, error) {
 	fields := strings.Fields(data)
 
-	xCoord, err1 := strconv.Atoi(fields[1][2 : len(fields[1])-1])
-	yCoord, err2 := strconv.Atoi(fields[2][2:])
+	xCoord, err1 := strconv.ParseInt(fields[1][2:len(fields[1])-1], 10, 64)
+	yCoord, err2 := strconv.ParseInt(fields[2][2:], 10, 64)
 
 	if err1 != nil || err2 != nil {
 		return Coordinates{}, errors.New("failed to parse prize integer")
