@@ -63,3 +63,6 @@ Whew, a hard one. I had to come up with some nasty solutions to get through this
 
 __Key learnings:__
 - Found out about cool utilities package "slices".
+
+### Day 13
+Wow, did not expect to get algebra so soon! Had to "re-learn" how to solve linear systems. Apparently Cramer's rule works just fine for 2x2 problems and is not hard to implement. It would have been possible to solve first part by using "brute-force", but second one wouldn't be trivial. So I am happy I went with the "proper" way. There once again was a catch, that said that the lowest number of tokens should be taken - but in such linear systems there's only one correct answer (ignoring dependent (infinitely many solutions) cases)!
