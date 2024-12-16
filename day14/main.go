@@ -35,19 +35,53 @@ func main() {
 		return
 	}
 
+	counter := 0
+	lowestCounter := 0
+	lowestScore := calculateSafetyScore(robots)
 	for i := 0; i < 100; i++ {
 		for r := 0; r < len(*robots); r++ {
 			moveRobot(&(*robots)[r])
 		}
+		counter++
+
+		safety := calculateSafetyScore(robots)
+		if lowestScore > safety {
+			lowestCounter = counter
+			lowestScore = safety
+		}
+
 	}
 
+	fmt.Println(calculateSafetyScore(robots))
+
+	for {
+		for r := 0; r < len(*robots); r++ {
+			moveRobot(&(*robots)[r])
+		}
+		counter++
+
+		safety := calculateSafetyScore(robots)
+		if lowestScore > safety {
+			lowestCounter = counter
+			lowestScore = safety
+		}
+
+		if counter >= 1_000_000 {
+			break
+		}
+	}
+
+	fmt.Println(lowestCounter)
+}
+
+func calculateSafetyScore(robots *[]Robot) int {
 	result := 1
 	result *= countRobotsInQuadrant(0, robots)
 	result *= countRobotsInQuadrant(1, robots)
 	result *= countRobotsInQuadrant(2, robots)
 	result *= countRobotsInQuadrant(3, robots)
 
-	fmt.Println(result)
+	return result
 }
 
 func countRobotsInQuadrant(quadrant int, robots *[]Robot) int {
