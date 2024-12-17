@@ -66,3 +66,6 @@ __Key learnings:__
 
 ### Day 13
 Wow, did not expect to get algebra so soon! Had to "re-learn" how to solve linear systems. Apparently Cramer's rule works just fine for 2x2 problems and is not hard to implement. It would have been possible to solve first part by using "brute-force", but second one wouldn't be trivial. So I am happy I went with the "proper" way. There once again was a catch, that said that the lowest number of tokens should be taken - but in such linear systems there's only one correct answer (ignoring dependent (infinitely many solutions) cases)!
+
+### Day 15
+Yes, I've skipped reflection on Day 14 - did not have much to say. As for today I was stuck on 2nd task for a long time. Overall - spaghetti code for today, but I'm happy I was able to solve it...
